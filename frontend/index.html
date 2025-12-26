@@ -1,0 +1,37 @@
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Frontend Microservice</title>
+  <style>
+    body { font-family: Arial; text-align: center; margin-top: 80px; }
+    h1 { color: royalblue; }
+    #msg { font-size: 20px; margin-top: 20px; color: green; }
+  </style>
+</head>
+<body>
+
+  <h1>Simple Frontend Microservice</h1>
+  <button onclick="fetchMessage()">Get Message from Backend</button>
+  <div id="msg"></div>
+
+<script>
+  function fetchMessage() {
+  fetch('/api/message')
+    .then(res => res.json())
+    .then(data => {
+      document.getElementById('msg').innerHTML = data.message;
+    })
+    .catch(err => {
+      document.getElementById('msg').innerHTML = 'Error fetching message';
+    });
+}
+
+</script>
+
+</body>
+</html>
+

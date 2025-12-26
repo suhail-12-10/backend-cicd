@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <title>K8s Microservices Demo</title>
+</head>
+<body>
+  <h1>Frontend Service</h1>
+  <p>Click the button to call the backend service:</p>
+  <button id="btn">Call Backend</button>
+  <pre id="output"></pre>
+
+<script>
+document.getElementById('btn').addEventListener('click', async () => {
+  try {
+    const res = await fetch('http://127.0.0.1:5000/api/message');
+    const data = await res.json();
+    document.getElementById('output').textContent = JSON.stringify(data, null, 2);
+  } catch (err) {
+    document.getElementById('output').textContent = 'Error: ' + err;
+  }
+});
+</script>
+</body>
+</html>
+
+
