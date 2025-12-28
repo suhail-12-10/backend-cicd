@@ -1,5 +1,10 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'docker:26.1'
+            args '-v /var/run/docker.sock:/var/run/docker.sock'
+        }
+    }
 
     environment {
         IMAGE_NAME = "suhail4545/backend-api"
@@ -8,17 +13,9 @@ pipeline {
 
     stages {
 
-        stage('Checkout Code') {
-            steps {
-                checkout scm
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
-                sh '''
-                  docker build -t $IMAGE_NAME:$IMAGE_TAG .
-                '''
+                sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
             }
         }
 
@@ -34,14 +31,6 @@ pipeline {
                       docker push $IMAGE_NAME:$IMAGE_TAG
                     '''
                 }
-            }
-        }
-
-        stage('Deploy to Kubernetes') {
-            steps {
-                sh '''
-                  kubectl apply -f k8s/
-                '''
             }
         }
     }
