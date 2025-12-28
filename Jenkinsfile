@@ -14,11 +14,12 @@ pipeline {
             }
         }
 
-        stage('Build Docker Image') {
-            steps {
-                sh 'docker build -t $IMAGE_NAME:$IMAGE_TAG .'
-            }
-        }
+       stage('Build Docker Image') {
+    steps {
+        sh 'docker build -f backend/Dockerfile -t suhail4545/backend-api:latest backend'
+    }
+}
+
 
         stage('Push to DockerHub') {
             steps {
